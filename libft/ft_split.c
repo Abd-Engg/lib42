@@ -1,27 +1,27 @@
 #include "libft.h"
 
-static int	count_words(char *string, char c)
+static int	count_words(char const *s, char c)
 {
 	int	i;
 	int	counter;
 
 	i = 0;
 	counter = 0;
-	while (string[i])
+	while (s[i])
 	{
-		while (string[i] && string[i] == c)
+		while (s[i] && s[i] == c)
 			i++;
-		if (string[i])
+		if (s[i])
 		{
 			counter++;
-			while (string[i] && string[i] != c)
+			while (s[i] && s[i] != c)
 				i++;
 		}
 	}
 	return (counter);
 }
 
-static char	*cut(char *string, int start, int len)
+static char	*cut(char const *s, int start, int len)
 {
 	char	*word;
 	int		i;
@@ -32,7 +32,7 @@ static char	*cut(char *string, int start, int len)
 	i = 0;
 	while (i < len)
 	{
-		word[i] = string[start + i];
+		word[i] = s[start + i];
 		i++;
 	}
 	word[i] = '\0';
@@ -52,7 +52,7 @@ static void	free_words(char **words)
 	free(words);
 }
 
-char	**ft_split(char *string, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**words;
 	int		i;
@@ -60,27 +60,32 @@ char	**ft_split(char *string, char c)
 	int		start;
 	int		len;
 
-	words = malloc(sizeof(char *) * (count_words(string, c) + 1));
+	if (!s)
+		return (NULL);
+	words = malloc(sizeof(char *) * (count_words(s, c) + 1));
 	if (!words)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (string[i])
+	while (s[i])
 	{
-		while (string[i] && string[i] == c)
+		while (s[i] && s[i] == c)
 			i++;
 		start = i;
-		while (string[i] && string[i] != c)
-			i++;
-		len = i - start;
-		words[j] = cut(string, start, len);
-		if (!words[j])
+		if(s[i])
 		{
-			free_words(words);
-			return (NULL);
+			while (s[i] && s[i] != c)
+				i++;
+			len = i - start;
+			words[j] = cut(s, start, len);
+			if (!words[j])
+			{
+				free_words(words);
+				return (NULL);
+			}
+			j++;
 		}
-		j++;
-	}
+	}	
 	words[j] = NULL;
 	return (words);
 }

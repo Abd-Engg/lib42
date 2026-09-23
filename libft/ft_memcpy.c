@@ -16,3 +16,10 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
+/*
+int main()
+{
+	char s[] = "12345123456";
+	printf("%s\n",(char *)ft_memcpy(s,"000",7));
+
+}*/

@@ -24,4 +24,13 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 		}
 	}
 	return (dest);
-}
+}/*
+void	*ft_memove(void *dest, const void *src, size_t n)
+{
+	void *temp = malloc(n);
+	if (!temp)
+		return NULL;
+	ft_memcpy(temp,src,n);
+	ft_memcpy(dest,temp,n);
+	return dest;
+}*/

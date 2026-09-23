@@ -25,6 +25,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ret_value = malloc(size + 1);
 	if (!ret_value)
 		return (NULL);
+
 	ret_value[0] = '\0';
 	copy(ret_value, s1);
 	copy(ret_value, s2);
