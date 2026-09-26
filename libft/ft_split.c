@@ -39,7 +39,7 @@ static char	*cut(char const *s, int start, int len)
 	return (word);
 }
 
-static void	free_words(char **words)
+static void	free_words(char **words )
 {
 	int	i;
 
@@ -58,7 +58,6 @@ char	**ft_split(char const *s, char c)
 	int		i;
 	int		j;
 	int		start;
-	int		len;
 
 	if (!s)
 		return (NULL);
@@ -72,20 +71,15 @@ char	**ft_split(char const *s, char c)
 		while (s[i] && s[i] == c)
 			i++;
 		start = i;
-		if(s[i])
+		if (s[i])
 		{
 			while (s[i] && s[i] != c)
 				i++;
-			len = i - start;
-			words[j] = cut(s, start, len);
-			if (!words[j])
-			{
-				free_words(words);
-				return (NULL);
-			}
-			j++;
+			words[j++] = cut(s, start, i - start);
+			if (!words[j - 1])
+				return (free_words(words), NULL);
 		}
-	}	
+	}
 	words[j] = NULL;
 	return (words);
 }

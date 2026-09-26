@@ -1,11 +1,3 @@
-NAME		= libft.a
-
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
-AR			= ar
-ARFLAGS		= rcs
-RM			= rm -f
-
 SRCS		= ft_isalpha.c \
 			  ft_isdigit.c \
 			  ft_isalnum.c \
@@ -49,23 +41,21 @@ SRCS		= ft_isalpha.c \
 			  ft_lstclear.c \
 			  ft_lstiter.c \
 			  ft_lstmap.c
-
+ 
 OBJS		= $(SRCS:.c=.o)
+ 
+%.o : %.c
+	cc -Wall -Wextra -Werror -c $< -o $@
 
-%.o: %.c libft.h
-	$(CC) $(CFLAGS) -c $< -o $@
+all : $(OBJS) 
+	ar rcs libft.a $(OBJS) 
 
-$(NAME): $(OBJS)
-	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
+clean : 
+	rm -f *.o
 
-all: $(NAME)
+fclean : clean
+	rm -f libft.a
 
-clean:
-	$(RM) $(OBJS)
+re : fclean all
 
-fclean: clean
-	$(RM) $(NAME)
-
-re: fclean all
-
-.PHONY: all clean fclean re
+.PHONY : all clean fclean re
